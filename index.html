@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
+    <style>
+        body {
+            margin: 0;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        iframe {
+            float: right
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 20px 0 0 10px
+        }
+
+        td {
+            width: 10px; /* Adjust the width of each cell */
+            height: 10px; /* Adjust the height of each cell */
+            border: 1px solid #000;
+            text-align: center;
+            vertical-align: middle; /* Adjust the background color as needed */
+            color: #fff; /* Adjust the text color as needed */
+            border-radius: 50%; /* Make cells circular */
+            padding: 15px;
+        }
+
+        #color {
+            margin: 50px 0 0 920px
+        }
+
+        #inputColour{
+            margin: 0 0 0 30px
+        }
+
+        #table0, #table1, #table2, #table3, #table4, #table5, #table6, #table7 {
+            float: left;
+            display: inline;
+            width: 15%;
+        }
+
+        #cube {
+            float:left
+        }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.js",
+                "orbitControls": "https://threejs.org/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+    </script>
+</head>
+<body>
+<section id="cube"></section>
+
+<!--<section id='color'><button id="draw">draw</button> <input type="text" id="inputColour" data-coloris></section>-->
+<section id='color'><button id="draw">draw</button> </section>
+<script type="module" src="/cube.js"></script>
+<script type="module" src="/editor.js"></script>
+<script type="module" src="/mapper.js"></script>
+<section id="table"></section>
+<script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+
+<script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

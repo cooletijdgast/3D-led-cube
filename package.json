@@ -1,0 +1,12 @@
+{
+  "name": "3d-cube",
+  "version": "1.0.0",
+  "dependencies": {
+    "camera-controls": "^2.7.3",
+    "intel-hex": "^0.2.0",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.10"
+  }
+}
