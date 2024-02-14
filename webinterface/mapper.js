@@ -1,3 +1,5 @@
+import {drawCube} from "./cube.js";
+
 const cubeSize = 8;
 
 export function mapToCube() {
@@ -28,7 +30,7 @@ function getTables() {
     return tables;
 }
 
-export function mapToHexTable(cube) {
+export function mapToHexTable() {
     const hexTable = [
         ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
         ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
@@ -41,52 +43,52 @@ export function mapToHexTable(cube) {
         ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00']
     ];
 
-    let rowCounter = 0;
     let tables = getTables();
+    let binary = '';
+    let hex = '';
 
     if (tables[0] != null) {
-        console.log(tables[0].rows[0].cells[0].style.backgroundColor);
-
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
-                rowCounter = 0;
-                for (let k = 0; k < 8; k++) {
-                    if (tables[i].rows[j].cells[k].style.backgroundColor === 'rgb(52, 152, 219)') {
-                        rowCounter++;
+        for (let y = 0; y < 8; y++) {
+            for (let z = 0; z < 8; z++) {
+                for (let x = 0; x < 8; x++) {
+                    if (tables[y].rows[z].cells[x].style.backgroundColor === 'rgb(52, 152, 219)') {
+                        binary = `${binary}1`
+                    } else {
+                        binary = `${binary}0`
                     }
                 }
-                hexTable[i][j] = getHexValue(rowCounter);
+                hex = parseInt(binary, 2).toString(16);
+                hexTable[y][z === 0 ? 0 : 8 - z] = hex.length < 2 ? `0x0${hex}` : `0x${hex}`;
+                hex = 0;
+                binary = '';
             }
-
-            if (i > 0) {
-                hexTable[i][0] = hexTable[i - 1][0];
-                hexTable[i - 1][0] = '0x00';
-                console.log(hexTable);
+        }
+        for (let i = 8; i > -1; i--) {
+            if (hexTable[i][0] !== '0x00' && hexTable[i + 1][0] === '0x00') {
+                hexTable[i + 1][0] = hexTable[i][0];
+                hexTable[i][0] = '0x00';
             }
         }
         hexTable[0][0] = '0xF2';
     }
+    console.log(hexTable);
+    // return [
+    //     ['0xF2', '0x01', '0x02', '0x04', '0x08', '0x10', '0x20', '0x40'],
+    //     ['0x80', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
+    //     ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
+    //     ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
+    //     ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
+    //     ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
+    //     ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
+    //     ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00'],
+    //     ['0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00', '0x00']
+    // ];
+    return hexTable;
 }
 
-function getHexValue(rowCounter) {
-    switch (rowCounter) {
-        case 1:
-            return '0x01';
-        case 2:
-            return '0x03';
-        case 3:
-            return '0x07';
-        case 4:
-            return '0x0F';
-        case 5:
-            return '0x1F';
-        case 6:
-            return '0x3F';
-        case 7:
-            return '0x7F';
-        case 8:
-            return '0xFF';
-        default:
-            return '0x00';
-    }
+export async function programToSerial(hexTable) {
+    console.log(await axios.post('http://localhost:3490', {
+        b: hexTable,
+    }));
+    drawCube();
 }

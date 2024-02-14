@@ -15,6 +15,9 @@ function makeTables() {
                 addEventListeners(newCell);
             }
         }
+        table.style.float = 'left';
+        table.style.display = 'inline';
+        // table.style.width = '15%';
         let caption = document.createElement("caption");
         caption.innerText = `Layer ${t + 1}`;
         document.getElementById('table').appendChild(table);
