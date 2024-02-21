@@ -129,14 +129,40 @@
             float: left
         }
 
-        #cubeSettings {
-            display: inline-block;
-        }
-
         #table {
             display: grid;
-            grid-template-columns: 340px 340px 340px 340px;
-            gap: 10px;
+            grid-template-columns: repeat(5, 340px 340px 340px 340px 40px);
+            gap: 3px;
+        }
+        #table4 {
+            grid-column-start: 1;
+            grid-column-end: 1;
+            grid-row-start: 2;
+            grid-row-end: 2;
+        }
+        #table5{
+            grid-column-start: 2;
+            grid-column-end: 2;
+            grid-row-start: 2;
+            grid-row-end: 2;
+        }
+        #table6{
+            grid-column-start: 3;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 2;
+        }
+        #table7{
+            grid-column-start: 4;
+            grid-column-end: 4;
+            grid-row-start: 2;
+            grid-row-end: 2;
+        }
+        #test1234{
+            grid-column-start: 5;
+            grid-column-end: 5;
+            grid-row-start: 1;
+            grid-row-end: 4;
         }
     </style>
     <script type="importmap">
@@ -149,18 +175,18 @@
     </script>
 </head>
 <body>
-<section id="cubeSettings">
+<section id="cubeSettings" class="grid">
     <section id="cube"></section>
     <section id='settings'>
         <button class="button-6" id="draw">Draw</button>
         <button class="button-6" id="program">Program</button>
 <!--        <button class="button-6" id="angle">Angle</button>-->
-        <button class="button-6" id="frame">Save frame</button>
+        <button class="button-6" id="frame">Add frame</button>
         <label class="input-range" style="width: 50%">Delay (ms)<input class="form-range" type="range" id="delay" style="width: 40%"><input class="form-control" type="number" id="delayInput" style="width: 20%; padding: .01rem 0.2rem" value="50"></label>
+        <button class="button-6" id="stop">Stop</button>
     </section>
     <section id="table"></section>
 </section>
-
 <script type="module" src="/webinterface/cube.js"></script>
 <script type="module" src="/webinterface/editor.js"></script>
 <script type="module" src="/webinterface/mapper.js"></script>

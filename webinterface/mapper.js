@@ -87,8 +87,8 @@ export function mapToHexTable() {
 }
 
 export async function programToSerial(hexTable) {
-    console.log(await axios.post('http://localhost:3490', {
+    await axios.post('http://192.168.2.26:3490', {
         b: hexTable,
-    }));
+    });
     drawCube();
 }

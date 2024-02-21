@@ -12,7 +12,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 
 
-renderer.setSize(500, 500);
+renderer.setSize(400, 400);
 document.getElementById('cube').appendChild(renderer.domElement);
 const arrowScene = new THREE.Scene();
 

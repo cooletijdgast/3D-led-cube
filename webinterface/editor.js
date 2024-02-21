@@ -17,11 +17,34 @@ function makeTables() {
         }
         table.style.float = 'left';
         table.style.display = 'inline';
-        // table.style.width = '15%';
+        table.style.height = '380px';
+        let checkmark = document.createElement('input');
+        checkmark.type = 'checkbox';
+        checkmark.id = `check${t}`;
+        checkmark.addEventListener('mousedown', (event) => {
+            let table = document.getElementById(`table${event.target.id.slice(5)}`);
+            for (let i = 0; i < cubeSize; i++) {
+                for (let j = 0; j < cubeSize; j++) {
+                    if(table.height === 'full') {
+                        table.rows[i].cells[j].style.backgroundColor = '#FFFFFF';
+                    }
+                    else
+                        table.rows[i].cells[j].style.backgroundColor = '#3498DB';
+                }
+            }
+            if(table.height === 'full')
+                table.height = '';
+            else
+                table.height = 'full';
+        })
         let caption = document.createElement("caption");
         caption.innerText = `Layer ${t + 1}`;
+        caption.style.display = 'inline-block';
+        caption.style.paddingRight = '10px';
+        caption.style.paddingLeft = '5px';
         document.getElementById('table').appendChild(table);
         document.getElementById(`table${t}`).appendChild(caption);
+        document.getElementById(`table${t}`).appendChild(checkmark);
     }
 }
 
