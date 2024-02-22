@@ -50,7 +50,10 @@ function frameList() {
     let section = document.createElement('section');
     section.id = 'test1234'
     section.style.paddingTop = '20px'
+    section.style.maxHeight = '806px';
+    section.style.overflowY = 'scroll';
     tableElement.appendChild(section);
+    addButtonToFrameList();
 }
 
 function addButtonToFrameList(){
