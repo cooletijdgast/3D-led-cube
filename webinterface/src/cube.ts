@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import {OrbitControls} from 'orbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {mapToCube} from "./mapper.js";
 
 const scene = new THREE.Scene();
-THREE.Object3D.DefaultUp = new THREE.Vector3(0,0,1);
+THREE.Object3D.DEFAULT_UP = new THREE.Vector3(0,0,1);
 
 const renderer = new THREE.WebGLRenderer();
 
@@ -13,7 +13,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 
 renderer.setSize(400, 400);
-document.getElementById('cube').appendChild(renderer.domElement);
+document.getElementById('cube')!.appendChild(renderer.domElement);
 const arrowScene = new THREE.Scene();
 
 const CANVAS_WIDTH = 200;
@@ -31,11 +31,11 @@ const arrowRenderer = new THREE.WebGLRenderer({alpha: true}); // clear
 arrowRenderer.setClearColor(0x000000, 0);
 arrowRenderer.setSize(CANVAS_WIDTH, CANVAS_HEIGHT);
 
-const arrowCanvas = document.getElementById('cube').appendChild(arrowRenderer.domElement);
+const arrowCanvas = document.getElementById('cube')!.appendChild(arrowRenderer.domElement);
 
 arrowCanvas.setAttribute('id', 'arrowCanvas');
-arrowCanvas.style.width = CANVAS_WIDTH;
-arrowCanvas.style.height = CANVAS_HEIGHT;
+arrowCanvas.style.width = `${CANVAS_WIDTH}`;
+arrowCanvas.style.height = `${CANVAS_HEIGHT}`;
 
 const cubeSize = 8;
 const ledSize = 0.3;
@@ -53,34 +53,29 @@ const cubeLEDs = new Array(cubeSize)
             )
     );
 
-document.getElementById('draw').addEventListener("click", drawCube);
+document.getElementById('draw')!.addEventListener("click", drawCube);
 
-// Position LEDs in the cube
 export function drawCube() {
     let colors = mapToCube();
-    // cubeLEDs[x][y][z];
     cubeLEDs.forEach((layer, y) => {
         layer.forEach((row, z) => {
             row.forEach((led, x) => {
-                if (colors[y][z][x] != null) {
-                    led.material.color = new THREE.Color(colors[y][z][x]);
+                if (colors[z][x][y] != null) {
+                    (<any>led.material).color = new THREE.Color(colors[z][x][y]);
                 } else {
-                    led.material.color = new THREE.Color('rgb(255, 255, 255)');
+                    (<any>led.material).color = new THREE.Color('rgb(255, 255, 255)');
                 }
                 led.position.set((7-x) - cubeSize / 2, y - cubeSize / 2, z - cubeSize / 2);
-                led.material.transparent = true;
-                led.material.opacity = .8;
+                (<any>led.material).transparent = true;
+                (<any>led.material).opacity = .8;
 
                 scene.add(led);
             });
         });
     });
-    camera.position.set(-15, 7, -15);
+    camera.position.set(-15, -15, 10);
     animate();
 }
-
-
-drawCube();
 
 function animate() {
 
@@ -99,3 +94,4 @@ function animate() {
     renderer.render(scene, camera);
 
 }
+drawCube();

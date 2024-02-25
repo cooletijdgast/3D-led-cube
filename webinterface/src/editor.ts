@@ -22,44 +22,48 @@ function makeTables() {
         checkmark.type = 'checkbox';
         checkmark.id = `check${t}`;
         checkmark.addEventListener('mousedown', (event) => {
-            let table = document.getElementById(`table${event.target.id.slice(5)}`);
-            for (let i = 0; i < cubeSize; i++) {
-                for (let j = 0; j < cubeSize; j++) {
-                    if(table.height === 'full') {
-                        table.rows[i].cells[j].style.backgroundColor = '#FFFFFF';
+            if (event.target instanceof Element) {
+                let table: HTMLTableElement = document.getElementById(`table${event.target!.id.slice(5)}`) as HTMLTableElement;
+
+                for (let i = 0; i < cubeSize; i++) {
+                    for (let j = 0; j < cubeSize; j++) {
+                        if (table!.style.height === 'full') {
+                            table!.rows[i].cells[j].style.backgroundColor = '#FFFFFF';
+                        } else
+                            table!.rows[i].cells[j].style.backgroundColor = '#3498DB';
                     }
-                    else
-                        table.rows[i].cells[j].style.backgroundColor = '#3498DB';
                 }
+                if (table.style.height === 'full')
+                    table.style.height = '';
+                else
+                    table.style.height = 'full';
             }
-            if(table.height === 'full')
-                table.height = '';
-            else
-                table.height = 'full';
         })
         let caption = document.createElement("caption");
         caption.innerText = `Layer ${t + 1}`;
         caption.style.display = 'inline-block';
         caption.style.paddingRight = '10px';
         caption.style.paddingLeft = '5px';
-        document.getElementById('table').appendChild(table);
-        document.getElementById(`table${t}`).appendChild(caption);
-        document.getElementById(`table${t}`).appendChild(checkmark);
+        document.getElementById('table')!.appendChild(table);
+        document.getElementById(`table${t}`)!.appendChild(caption);
+        document.getElementById(`table${t}`)!.appendChild(checkmark);
     }
 }
 
-function addEventListeners(newCell) {
+function addEventListeners(newCell: HTMLTableCellElement) {
     newCell.addEventListener(
         "mousedown",
         (event) => {
             mouseDown = true;
-            let c = event.target.style.backgroundColor;
-            let rgb = c.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
+            if (event.target instanceof HTMLElement) {
+                let c = event.target.style.backgroundColor;
+                let rgb = c.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
 
-            if ((rgbToHex(Number(rgb[0]), Number(rgb[1]), Number(rgb[2])) === '#3498db')) {
-                event.target.style.backgroundColor = '#ffffff';
-            } else {
-                event.target.style.backgroundColor = '#3498db';
+                if ((rgbToHex(Number(rgb[0]), Number(rgb[1]), Number(rgb[2])) === '#3498db')) {
+                    event.target.style.backgroundColor = '#ffffff';
+                } else {
+                    event.target.style.backgroundColor = '#3498db';
+                }
             }
         },
         false,
@@ -67,7 +71,7 @@ function addEventListeners(newCell) {
     newCell.addEventListener(
         "mouseover",
         (event) => {
-            if (mouseDown) {
+            if (mouseDown && event.target instanceof HTMLElement) {
                 event.target.style.backgroundColor = '#3498db';
             }
         },
@@ -78,11 +82,11 @@ function addEventListeners(newCell) {
     };
 }
 
-function rgbToHex(r, g, b) {
+function rgbToHex(r: number, g: number, b: number) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
-function componentToHex(c) {
+function componentToHex(c: number) {
     if (c === undefined) {
         c = 0;
     }
