@@ -72,6 +72,7 @@ export function mapToHexTable() {
         }
         hexTable[0][0] = '0xF2';
     }
+    console.log(hexTable);
     return hexTable;
 }
 
@@ -81,4 +82,15 @@ export async function programToSerial(hexTable: string[][]) {
         b: hexTable,
     });
     drawCube();
+}
+
+export function loadFrameIntoTables(tablesFromFrame: HTMLTableElement[]){
+    let tables = getTables();
+    for (let y = 0; y < 8; y++) {
+        for (let z = 0; z < 8; z++) {
+            for (let x = 0; x < 8; x++) {
+                tables[y].rows[x].cells[z].style.backgroundColor = tablesFromFrame[y].rows[x].cells[z].style.backgroundColor;
+            }
+        }
+    }
 }

@@ -1,10 +1,11 @@
-import {getTables, mapToHexTable, programToSerial} from './mapper.js';
+import {getTables, loadFrameIntoTables, mapToHexTable, programToSerial} from './mapper.js';
 
 interface frameInterface {
     frameId: number;
     framesInTables: HTMLTableElement[],
     framesInHex: string[][];
 }
+
 let frames: frameInterface[] = [];
 
 let run = 0;
@@ -13,6 +14,9 @@ let buttonCounter = 0;
 window.addEventListener("load", () => {
     frameList();
     addEventToButton();
+    let button = document.getElementById('buttonFrameList0');
+    if (button !== null)
+        button.className = 'frameListButton-selected';
 })
 
 let slider = document.getElementById('delay');
@@ -44,43 +48,32 @@ function addEventToButton() {
 function addFrame() {
     frameCount++;
     addButtonToFrameList();
+    saveEmptyFrame();
 }
 
 function saveFrame() {
-    for (let i = 0; i < frameCount; i++) {
-        if(frames[i] === undefined){
-            frames[i] = new class implements frameInterface {
-                frameId: number = 0;
-                framesInHex: string[][] = [[]];
-                framesInTables: HTMLTableElement[] = [];
-            }
-        }
-        if (frames[i].framesInTables[i] !== undefined && frames[i].frameId === currentFrame) {
-            frames[i].framesInHex = mapToHexTable();
-            frames[i].framesInTables = getTables();
-        } else {
-            frames[i].framesInHex.push(...mapToHexTable());
-            frames[i].framesInTables.push(...getTables());
-            frames[i].frameId = currentFrame;
-        }
-        console.log(frames[i]);
+    if (frames[currentFrame].framesInTables[0] !== undefined && frames[currentFrame].frameId === currentFrame) {
+        frames[currentFrame].framesInHex = mapToHexTable();
+        frames[currentFrame].framesInTables = getTables();
+    } else {
+        frames[currentFrame].framesInHex.push(...mapToHexTable());
+        frames[currentFrame].framesInTables.push(...getTables());
+        frames[currentFrame].frameId = currentFrame;
     }
+    console.log(frames[currentFrame]);
 
 
     console.log(currentFrame, frameCount);
 }
 
 async function programFrames() {
-    run = 1;
     if (frameCount === 0) {
         addFrame();
     }
-    while (run) {
-        for (let i = 0; i < frameCount; i++) {
-            if(frames[i] !== undefined) {
-                await programToSerial(frames[i].framesInHex);
-                await delay(slider!.innerHTML as unknown as number);
-            }
+    for (let i = 0; i < frameCount; i++) {
+        if (frames[i] !== undefined) {
+            await programToSerial(frames[i].framesInHex);
+            await delay(slider!.innerHTML as unknown as number);
         }
     }
 }
@@ -112,10 +105,44 @@ function addEventListenerToButton(button: HTMLButtonElement) {
     button.addEventListener(
         "click",
         (event) => {
-            console.log(event!.target!);
+            resetClassOnButton();
+            let button = <HTMLButtonElement>(event!.target);
+            button.className = 'frameListButton-selected';
+            currentFrame = Number(button.id.slice(15, 16)) + 1;
+            loadFrame(currentFrame - 1);
+            console.log(currentFrame);
         },
         false,
     );
+}
+
+function resetClassOnButton() {
+    let button: HTMLCollection = document.getElementsByClassName('frameListButton-selected');
+    for (let i = 0; i < button.length; i++) {
+        button[i].className = 'frameListButton';
+    }
+}
+
+function loadFrame(frameId: number) {
+    console.log(frames[frameId]);
+    loadFrameIntoTables(frames[frameId].framesInTables);
+}
+
+function saveEmptyFrame() {
+    let emptyTables = getTables();
+    for (let y = 0; y < 8; y++) {
+        for (let z = 0; z < 8; z++) {
+            for (let x = 0; x < 8; x++) {
+                emptyTables[y]!.rows[z].cells[x].style.backgroundColor = '#FFFFFF'
+            }
+        }
+    }
+    frames.push(new class implements frameInterface {
+        frameId: number = frameCount;
+        framesInHex: string[][] = [[]];
+        framesInTables: HTMLTableElement[] = emptyTables;
+    });
+    console.log(frames);
 }
 
 function delay(miliseconds: number) {

@@ -24,19 +24,20 @@ function makeTables() {
         checkmark.addEventListener('mousedown', (event) => {
             if (event.target instanceof Element) {
                 let table: HTMLTableElement = document.getElementById(`table${event.target!.id.slice(5)}`) as HTMLTableElement;
-
                 for (let i = 0; i < cubeSize; i++) {
                     for (let j = 0; j < cubeSize; j++) {
-                        if (table!.style.height === 'full') {
-                            table!.rows[i].cells[j].style.backgroundColor = '#FFFFFF';
-                        } else
-                            table!.rows[i].cells[j].style.backgroundColor = '#3498DB';
+                        if (table.dataset.full === 'full') {
+                            table.rows[i].cells[j].style.backgroundColor = '#FFFFFF';
+                        } else {
+                            table.rows[i].cells[j].style.backgroundColor = '#3498DB';
+                        }
                     }
                 }
-                if (table.style.height === 'full')
-                    table.style.height = '';
-                else
-                    table.style.height = 'full';
+                if (table.dataset.full === 'full') {
+                    table.dataset.full = '';
+                } else {
+                    table.dataset.full = 'full';
+                }
             }
         })
         let caption = document.createElement("caption");
