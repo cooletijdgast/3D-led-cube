@@ -90,6 +90,7 @@ export function loadFrameIntoTables(tablesFromFrame: HTMLTableElement[]){
         for (let z = 0; z < 8; z++) {
             for (let x = 0; x < 8; x++) {
                 tables[y].rows[x].cells[z].style.backgroundColor = tablesFromFrame[y].rows[x].cells[z].style.backgroundColor;
+                console.log('loading with;', tables[y].rows[x].cells[z].style.backgroundColor, tablesFromFrame[y].rows[x].cells[z].style.backgroundColor)
             }
         }
     }

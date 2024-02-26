@@ -52,18 +52,18 @@ function addFrame() {
 }
 
 function saveFrame() {
-    if (frames[currentFrame].framesInTables[0] !== undefined && frames[currentFrame].frameId === currentFrame) {
-        frames[currentFrame].framesInHex = mapToHexTable();
-        frames[currentFrame].framesInTables = getTables();
+    if (frames[currentFrame - 1] !== undefined && frames[currentFrame - 1].frameId === currentFrame) {
+        frames[currentFrame - 1].framesInHex = mapToHexTable();
+        frames[currentFrame - 1].framesInTables = getTables();
     } else {
-        frames[currentFrame].framesInHex.push(...mapToHexTable());
-        frames[currentFrame].framesInTables.push(...getTables());
-        frames[currentFrame].frameId = currentFrame;
+        frames[currentFrame - 1].framesInHex.push(...mapToHexTable());
+        frames[currentFrame - 1].framesInTables.push(...getTables());
+        frames[currentFrame - 1].frameId = currentFrame;
     }
-    console.log(frames[currentFrame]);
+    console.log('saving', frames[currentFrame - 1]);
 
 
-    console.log(currentFrame, frameCount);
+    console.log('currentFrame + frameCount', currentFrame  - 1, frameCount);
 }
 
 async function programFrames() {
@@ -110,7 +110,7 @@ function addEventListenerToButton(button: HTMLButtonElement) {
             button.className = 'frameListButton-selected';
             currentFrame = Number(button.id.slice(15, 16)) + 1;
             loadFrame(currentFrame - 1);
-            console.log(currentFrame);
+            console.log('currentFrame', currentFrame);
         },
         false,
     );
@@ -124,7 +124,8 @@ function resetClassOnButton() {
 }
 
 function loadFrame(frameId: number) {
-    console.log(frames[frameId]);
+    console.log('all frames', frames);
+    console.log('loading', frames[frameId]);
     loadFrameIntoTables(frames[frameId].framesInTables);
 }
 
