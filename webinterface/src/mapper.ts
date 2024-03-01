@@ -1,16 +1,9 @@
 import {drawCube} from "./cube.js";
 
 
-
 export function mapToCube() {
-    const cubeSize = 8;
     let tables: (HTMLTableElement | null)[] = getTables();
-    let cube = new Array(cubeSize)
-        .fill(null)
-        .map(() => new Array(cubeSize)
-            .fill(null)
-            .map(() => new Array(cubeSize)
-                .fill(null)));
+    let cube = getEmpty3dArray<string>()
     if (tables[0] != null) {
         for (let y = 0; y < 8; y++) {
             for (let z = 0; z < 8; z++) {
@@ -72,7 +65,6 @@ export function mapToHexTable() {
         }
         hexTable[0][0] = '0xF2';
     }
-    console.log(hexTable);
     return hexTable;
 }
 
@@ -84,14 +76,36 @@ export async function programToSerial(hexTable: string[][]) {
     drawCube();
 }
 
-export function loadFrameIntoTables(tablesFromFrame: HTMLTableElement[]){
+export function loadFrameIntoTables(tablesFromFrame: string[][][]) {
     let tables = getTables();
     for (let y = 0; y < 8; y++) {
         for (let z = 0; z < 8; z++) {
             for (let x = 0; x < 8; x++) {
-                tables[y].rows[x].cells[z].style.backgroundColor = tablesFromFrame[y].rows[x].cells[z].style.backgroundColor;
-                console.log('loading with;', tables[y].rows[x].cells[z].style.backgroundColor, tablesFromFrame[y].rows[x].cells[z].style.backgroundColor)
+                tables[y].rows[x].cells[z].style.backgroundColor = tablesFromFrame[y][x][z];
             }
         }
     }
+}
+
+export function getTableColors(): string[][][] {
+    let tableColors: string[][][] = getEmpty3dArray<string>();
+    let tables = getTables();
+    for (let y = 0; y < 8; y++) {
+        for (let z = 0; z < 8; z++) {
+            for (let x = 0; x < 8; x++) {
+                tableColors[y][x][z] = tables[y].rows[x].cells[z].style.backgroundColor;
+            }
+        }
+    }
+    return tableColors;
+}
+
+export function getEmpty3dArray<T>(fillValue?: string): T[][][] {
+    const cubeSize = 8;
+    return new Array(cubeSize)
+        .fill(fillValue ?? '')
+        .map((): T[][] => new Array(cubeSize)
+            .fill(fillValue ?? '')
+            .map((): T[] => new Array(cubeSize)
+                .fill(fillValue ?? '')));
 }

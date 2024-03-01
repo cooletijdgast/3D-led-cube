@@ -80,23 +80,6 @@ int send_response(int fd, char *header, char *content_type, void *body, int cont
 
 
 /**
- * Send a /d20 endpoint response
- */
-void get_d20(int fd) {
-    // Generate a random number between 1 and 20 inclusive
-
-    ///////////////////
-    // IMPLEMENT ME! //
-    ///////////////////
-
-    // Use send_response() to send it back as text/plain data
-
-    ///////////////////
-    // IMPLEMENT ME! //
-    ///////////////////
-}
-
-/**
  * Send a 404 response
  */
 void response404(int fd) {
@@ -141,18 +124,6 @@ struct file_data *get_file(char *request_path) {
         exit(3);
     }
     return filedata;
-}
-
-/**
- * Search for the end of the HTTP header
- * 
- * "Newlines" in HTTP can be \r\n (carriage return followed by newline) or \n
- * (newline) or \r (carriage return).
- */
-char *find_start_of_body(char *header) {
-    ///////////////////
-    // IMPLEMENT ME! // (Stretch)
-    ///////////////////
 }
 
 /**
