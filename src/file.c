@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "file.h"
+#include "header/file.h"
 
 /**
  * Loads a file into memory and returns a pointer to the data.

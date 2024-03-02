@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "hashtable.h"
-#include "cache.h"
+#include "header/hashtable.h"
+#include "header/cache.h"
 
 /**
  * Allocate a cache entry

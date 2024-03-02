@@ -1,26 +1,28 @@
 CC=gcc
 CFLAGS=-Wall -Wextra
 
-OBJS=server.o net.o file.o mime.o cache.o hashtable.o llist.o
+OBJS=server.o net.o file.o mime.o cache.o hashtable.o llist.o ../../serialTest/serial.o
 
 all: server
 
 server: $(OBJS)
 	gcc -o $@ $^
 
-net.o: net.c net.h
+net.o: net.c header/net.h
 
-server.o: server.c net.h
+server.o: server.c header/net.h
 
-file.o: file.c file.h
+file.o: file.c header/file.h
 
-mime.o: mime.c mime.h
+mime.o: mime.c header/mime.h
 
-cache.o: cache.c cache.h
+cache.o: cache.c header/cache.h
 
-hashtable.o: hashtable.c hashtable.h
+hashtable.o: hashtable.c header/hashtable.h
 
-llist.o: llist.c llist.h
+llist.o: llist.c header/llist.h
+
+serial.o: ../../serialTest/serial.c ../../serialTest/serial.h
 
 clean:
 	rm -f $(OBJS)

@@ -1,6 +1,6 @@
 #include <string.h>
 #include <ctype.h>
-#include "mime.h"
+#include "header/mime.h"
 
 #define DEFAULT_MIME_TYPE "application/octet-stream"
 

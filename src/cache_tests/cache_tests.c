@@ -2,8 +2,8 @@
 #include <string.h>
 #include "utils.h"
 #include "minunit.h"
-#include "../cache.h"
-#include "../hashtable.h"
+#include "../header/cache.h"
+#include "../header/hashtable.h"
 
 char *test_cache_create()
 {

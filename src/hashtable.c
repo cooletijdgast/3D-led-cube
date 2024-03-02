@@ -38,8 +38,8 @@ printf("%d %s\n", q->bar, q->baz); // 12 Hello
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "llist.h"
-#include "hashtable.h"
+#include "header/llist.h"
+#include "header/hashtable.h"
 
 #define DEFAULT_SIZE 128
 #define DEFAULT_GROW_FACTOR 2
