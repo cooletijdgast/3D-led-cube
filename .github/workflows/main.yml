@@ -26,5 +26,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build image for raspberrypi
         run: |
-          echo Hello raspberry!
-          ls
+          echo Building image.
+          cd serialinterface/src
+          make
+          ./server
