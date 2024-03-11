@@ -228,7 +228,7 @@ void handle_http_request(int fd) {
     char httpMethod[4], httpPath[60];
 
     sscanf(request, "%s%s", httpMethod, httpPath);
-
+    printf("httpMethod %s\n", httpMethod);
     if (strcmp("OPTI/", httpMethod) == 0) {
         send_response(fd,
                       "HTTP/1.1 204 No Content\nAccept: text/html,application/json\nAccess-Control-Allow-Origin: *\nAccess-Control-Request-Method: POST\nAccess-Control-Allow-Headers: *\n",

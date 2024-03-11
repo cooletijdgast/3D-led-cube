@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -Wextra
 
-OBJS=server.o net.o file.o mime.o cache.o hashtable.o llist.o ../../serialTest/serial.o
+OBJS=server.o net.o file.o mime.o cache.o hashtable.o llist.o serial.o
 
 all: server
 
