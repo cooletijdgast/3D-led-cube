@@ -1,4 +1,4 @@
-#include "serial.h"
+#include "header/serial.h"
 
 int serial_open(const char *device, const int baudrate) {
     int fd = open(device, O_RDWR | O_NOCTTY | O_NDELAY);

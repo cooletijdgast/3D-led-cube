@@ -33,7 +33,7 @@
 #include "header/file.h"
 #include "header/mime.h"
 #include "header/cache.h"
-#include "serial.h"
+#include "header/serial.h"
 
 #define PORT "3490"  // the port users will be connecting to
 
@@ -79,7 +79,7 @@ int send_response(int fd, char *header, char *content_type, void *body, int cont
     if (rv < 0) {
         perror("send");
     }
-
+    printf("response %s\n", response);
     return rv;
 }
 
