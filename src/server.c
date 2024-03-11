@@ -33,7 +33,7 @@
 #include "header/file.h"
 #include "header/mime.h"
 #include "header/cache.h"
-#include "../../serialTest/serial.h"
+#include "serial.h"
 
 #define PORT "3490"  // the port users will be connecting to
 

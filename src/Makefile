@@ -22,7 +22,7 @@ hashtable.o: hashtable.c header/hashtable.h
 
 llist.o: llist.c header/llist.h
 
-serial.o: ../../serialTest/serial.c ../../serialTest/serial.h
+serial.o: serial.c serial.h
 
 clean:
 	rm -f $(OBJS)
