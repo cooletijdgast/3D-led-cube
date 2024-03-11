@@ -29,4 +29,3 @@ jobs:
           echo Building image.
           cd serialinterface/src
           make
-          ./server
